@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+
+:root {
+    --bg: #ffffff;
+    --bg-2: #c6c5ce;
+    --bg-3: #7a7891;
+    --bg-4: #53516d;
+    --fg: #24232b;
+    --accent-1: #fc328a;
+    --accent-2: #832db5;
+    --font: "Lato", "Segoe UI", sans-serif;
+}
+
+body {
+    background: linear-gradient(150deg, var(--accent-1), var(--accent-2)) fixed;
+    font-family: var(--font);
+    margin: 0px;
+}
+
+h1 {
+    font-weight: 900;
+    margin-top: 0px;
+}
+
+#main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#game {
+    background-color: var(--bg);
+    position: absolute;
+    min-width: 50%;
+    min-height: 80%;
+    top: 10%;
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+#face {
+    background-color: var(--bg-2);
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    text-shadow: 0px 4px var(--bg-3);
+    border: none;
+    box-shadow: 0px 4px var(--bg-3);
+    font-size: 30px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#face:hover {
+    border: 4px solid var(--accent-1);
+}
+
+#face:active {
+    border: none;
+    box-shadow: inset 0px 4px var(--accent-2);
+    text-shadow: 0px 4px var(--accent-2);
+    background-color: var(--accent-1);
+    top: 4px;
+}
+
+.space {
+    border: none;
+    background-color: var(--bg-2);
+    border-radius: 5px;
+    margin: 2px;
+    width: 32px;
+    height: 32px;
+    font-family: var(--font);
+    font-weight: 900;
+    font-size: 20px;
+    position: relative;
+}
+
+.space1 {
+    color: #2d1eb6;
+}
+
+.space2 {
+    color: #158544;
+}
+
+.space3 {
+    color: #b6115e;
+}
+
+.space4 {
+    color: #240a6b;
+}
+
+.space5 {
+    color: #5e0e33;
+}
+
+.space6 {
+    color: #1b8a84;
+}
+
+.space7 {
+    color: #000000;
+}
+
+.space8 {
+    color: #53516d;
+}
+
+.spaceHidden {
+    background-color: var(--bg-3);
+}
+
+.spaceHidden:hover {
+    bottom: 3px;
+    background-color: var(--bg-2);
+    box-shadow: 0px 3px var(--bg-3);
+    cursor: pointer;
+}
+
+.spaceHidden:active {
+    bottom: 0px;
+    background-color: var(--bg-3);
+    box-shadow: inset 0px 3px var(--bg-4);
+}
