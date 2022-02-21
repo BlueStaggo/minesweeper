@@ -26,7 +26,21 @@ export default function App(props: AppProps) {
                 x = Math.floor(Math.random() * props.width);
                 y = Math.floor(Math.random() * props.height);
             } while (false)
-            spaces[x][y] = { content: SpaceContent.mine, context: SpaceContext.revealed };
+            spaces[x][y].content = SpaceContent.mine;
+        }
+
+        for (let x = 0; x < spaces.length; x++) {
+            for (let y = 0; y < spaces[x].length; y++) {
+                if (spaces[x][y].content === SpaceContent.mine) continue;
+
+                let mines = 0;
+                for (let xx = Math.max(x - 1, 0); xx <= Math.min(x + 1, props.width - 1); xx++)
+                    for (let yy = Math.max(y - 1, 0); yy <= Math.min(y + 1, props.height - 1); yy++)
+                        if (spaces[xx][yy].content === SpaceContent.mine)
+                            mines++;
+
+                spaces[x][y].content = Object.values(SpaceContent)[mines + 1];
+            }
         }
 
         console.log("Done!");
