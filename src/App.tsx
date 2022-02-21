@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./Header";
+import Header, { Face } from "./Header";
 import MineField from "./MineField";
 import AbstractSpace, { SpaceContent, SpaceContext } from "./AbstractSpace";
 
@@ -17,6 +17,15 @@ export default function App(props: AppProps) {
                 callback(xx, yy);
             }
         }
+    }
+
+    function allMinesDiscovered(spaces: AbstractSpace[][]) {
+        return flags === 0 && !spaces.find((spaceColumn) =>
+            spaceColumn.find((space) =>
+                space.content !== SpaceContent.mine
+                && space.context === SpaceContext.hidden
+            )
+        );
     }
 
     function genSpaces() {
@@ -60,10 +69,13 @@ export default function App(props: AppProps) {
         setSpaces(genSpaces());
         setUsingFlag(false);
         setFlags(props.mineCount);
+        setFace("🙂");
     }
 
     function dig(x: number, y: number, spaces: AbstractSpace[][]) {
         let newSpaces = spaces.slice(0);
+        if (face !== "🙂" && face !== "😯")
+            return spaces;
         if (!usingFlag) {
             if (newSpaces[x][y].context !== SpaceContext.hidden) {
                 return newSpaces;
@@ -74,7 +86,20 @@ export default function App(props: AppProps) {
                     if (newSpaces[xx][yy].context === SpaceContext.hidden)
                         newSpaces = dig(xx, yy, newSpaces);
                 });
+            } else if (newSpaces[x][y].content === SpaceContent.mine) {
+                setFace("😵");
+                newSpaces.forEach((column) => {
+                    column.map((space) => {
+                        if (space.content === SpaceContent.mine)
+                            space.context = SpaceContext.revealed;
+                        return space;
+                    })
+                });
             }
+            if (allMinesDiscovered(newSpaces)) {
+                setFace("😎");
+            }
+
             return newSpaces;
         } else {
             if (newSpaces[x][y].context === SpaceContext.flagged) {
@@ -94,13 +119,14 @@ export default function App(props: AppProps) {
     });
     const [usingFlag, setUsingFlag] = useState(false);
     const [flags, setFlags] = useState(props.mineCount);
+    const [face, setFace] = useState<Face>("🙂");
 
     return (
         <div id="main">
             <div id="game">
                 <h1>MINESWEEPER</h1>
                 <Header
-                    face="🙂"
+                    face={face}
                     flags={flags}
                     usingFlag={usingFlag}
                     onFaceClick={reset}
@@ -114,6 +140,14 @@ export default function App(props: AppProps) {
                     spaces={spaces}
                     onClick={(x: number, y: number) => {
                         setSpaces(dig(x, y, spaces));
+                    }}
+                    onMouseDown={() => {
+                        if (face === "🙂")
+                            setFace("😯");
+                    }}
+                    onMouseUp={() => {
+                        if (face === "😯")
+                            setFace("🙂");
                     }}
                 />
             </div>

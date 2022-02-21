@@ -1,3 +1,5 @@
+export type Face = "🙂" | "😯" | "😵" | "😎";
+
 type HeaderProps = {
     face: "🙂" | "😯" | "😵" | "😎";
     flags: number;
@@ -9,16 +11,27 @@ type HeaderProps = {
 export default function Header(props: HeaderProps) {
     return (
         <div id="header">
-            <div className="headerItem">
+            <div
+                className="headerItem"
+            >
                 Mines: {props.flags}
             </div>
-            <button className="headerItem headerButton" onClick={props.onFaceClick}>
+            <button
+                className="headerItem headerButton"
+                onClick={props.onFaceClick}
+            >
                 {props.face}
             </button>
-            <button className="headerItem headerButton" onClick={props.onFlagClick}>
+            <button
+                className="headerItem headerButton"
+                onClick={props.onFlagClick}
+            >
                 🚩
             </button>
-            <div className="headerItem" style={{justifyContent: "right"}}>
+            <div
+                className="headerItem"
+                style={{justifyContent: "right"}}
+            >
                 {props.usingFlag ? "Placing flags" : "Digging squares"}
             </div>
         </div>

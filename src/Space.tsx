@@ -4,6 +4,8 @@ interface SpaceProps extends AbstractSpace {
     x: number;
     y: number;
     onClick: () => void;
+    onMouseDown: () => void;
+    onMouseUp: () => void;
 }
 
 export default function Space(props: SpaceProps) {
@@ -17,6 +19,8 @@ export default function Space(props: SpaceProps) {
         <button
             className={`space space${props.content} space${props.context}`}
             onClick={props.onClick}
+            onMouseDown={props.onMouseDown}
+            onMouseUp={props.onMouseUp}
         >
             {content}
         </button>

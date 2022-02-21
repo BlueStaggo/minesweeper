@@ -6,6 +6,8 @@ interface MineFieldProps {
     height: number;
     spaces: AbstractSpace[][];
     onClick: (x: number, y: number) => void;
+    onMouseDown: () => void;
+    onMouseUp: () => void;
 }
 
 function MineFieldRow(y: number, props: MineFieldProps) {
@@ -18,6 +20,8 @@ function MineFieldRow(y: number, props: MineFieldProps) {
                     content={props.spaces[x][y].content}
                     context={props.spaces[x][y].context}
                     onClick={() => props.onClick(x, y)}
+                    onMouseDown={props.onMouseDown}
+                    onMouseUp={props.onMouseUp}
                     key={x}
                 />)}
         </div>
