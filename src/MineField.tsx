@@ -1,11 +1,11 @@
-import Space, { SpaceContent, SpaceContext } from "./Space";
-import { Mine } from "./Mine";
+import Space from "./Space";
+import AbstractSpace from "./AbstractSpace";
 
 interface MineFieldProps {
     width: number;
     height: number;
-    mines: Mine[];
-    onClick: () => void;
+    spaces: AbstractSpace[][];
+    onClick: (x: number, y: number) => void;
 }
 
 function MineFieldRow(y: number, props: MineFieldProps) {
@@ -15,11 +15,9 @@ function MineFieldRow(y: number, props: MineFieldProps) {
                 <Space
                     x={x}
                     y={y}
-                    content={SpaceContent.mine}
-                    context={props.mines.find((value) => value.equals(x, y))
-                        ? SpaceContext.revealed
-                        : SpaceContext.hidden}
-                    onClick={props.onClick}
+                    content={props.spaces[x][y].content}
+                    context={props.spaces[x][y].context}
+                    onClick={() => props.onClick(x, y)}
                     key={x}
                 />)}
         </div>
@@ -29,8 +27,8 @@ function MineFieldRow(y: number, props: MineFieldProps) {
 export default function MineField(props: MineFieldProps) {
     return (
         <div id="mineField">
-            {[...Array(props.height).keys()].map((_, i) =>
-                MineFieldRow(i, props))}
+            {[...Array(props.height).keys()].map((_, y) =>
+                MineFieldRow(y, props))}
         </div>
     );
 }

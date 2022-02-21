@@ -1,27 +1,8 @@
-export enum SpaceContent {
-    mine = "💣",
-    empty = "",
-    one = "1",
-    two = "2",
-    three = "3",
-    four = "4",
-    five = "5",
-    six = "6",
-    seven = "7",
-    eight = "8"
-}
+import AbstractSpace from "./AbstractSpace";
 
-export enum SpaceContext {
-    hidden = "Hidden",
-    revealed = "Revealed",
-    flagged = "Flagged"
-}
-
-interface SpaceProps {
+interface SpaceProps extends AbstractSpace {
     x: number;
     y: number;
-    content: SpaceContent;
-    context: SpaceContext;
     onClick: () => void;
 }
 

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Face from "./Face";
-import { Mine } from "./Mine";
 import MineField from "./MineField";
+import AbstractSpace, { SpaceContent, SpaceContext } from "./AbstractSpace";
 
 interface AppProps {
     width: number;
@@ -10,27 +10,37 @@ interface AppProps {
 }
 
 export default function App(props: AppProps) {
-    function genMines() {
+    function genSpaces() {
+        console.log("Gen spaces...");
         let x: number, y: number;
-        let mines: Mine[] = [];
-        let contains = (value: Mine) => value.equals(x, y);
+        let spaces: AbstractSpace[][] = Array.from({ length: props.width }, () => (
+            Array.from({ length: props.height }, () => ({
+                content: SpaceContent.empty,
+                context: SpaceContext.revealed
+            }))
+        ));
 
         for (let i = 0; i < props.mineCount; i++) {
+            console.log(i);
             do {
                 x = Math.floor(Math.random() * props.width);
                 y = Math.floor(Math.random() * props.height);
-            } while (mines.find(contains))
-            mines.push(new Mine(x, y));
+            } while (false)
+            spaces[x][y] = { content: SpaceContent.mine, context: SpaceContext.revealed };
         }
 
-        return mines;
+        console.log("Done!");
+        return spaces;
     }
 
     function reset() {
-        setMines(genMines());
+        setSpaces(genSpaces());
     }
 
-    const [mines, setMines] = useState(genMines());
+    const [spaces, setSpaces] = useState(() => {
+        console.log("doot");
+        return genSpaces();
+    });
 
     return (
         <div id="main">
@@ -40,7 +50,7 @@ export default function App(props: AppProps) {
                 <MineField
                     width={props.width}
                     height={props.height}
-                    mines={mines}
+                    spaces={spaces}
                     onClick={() => {}}
                 />
             </div>
