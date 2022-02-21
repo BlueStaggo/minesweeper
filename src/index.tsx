@@ -3,6 +3,10 @@ import App from "./App";
 import "./index.css";
 
 ReactDOM.render(
-    <App/>,
+    <App
+        width={16}
+        height={12}
+        mineCount={30}
+    />,
     document.getElementById("root")
 );

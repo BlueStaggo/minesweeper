@@ -70,6 +70,11 @@ h1 {
     top: 4px;
 }
 
+.mineFieldRow {
+    display: flex;
+    justify-content: center;
+}
+
 .space {
     border: none;
     background-color: var(--bg-2);
@@ -81,6 +86,10 @@ h1 {
     font-weight: 900;
     font-size: 20px;
     position: relative;
+    text-align: center;
+    line-height: 32px;
+    padding: 0px;
+    vertical-align: middle;
 }
 
 .space1 {
