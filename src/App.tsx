@@ -16,7 +16,7 @@ export default function App(props: AppProps) {
         let spaces: AbstractSpace[][] = Array.from({ length: props.width }, () => (
             Array.from({ length: props.height }, () => ({
                 content: SpaceContent.empty,
-                context: SpaceContext.revealed
+                context: SpaceContext.hidden
             }))
         ));
 
@@ -51,6 +51,12 @@ export default function App(props: AppProps) {
         setSpaces(genSpaces());
     }
 
+    function dig(x: number, y: number) {
+        let newSpaces = spaces.slice(0);
+        newSpaces[x][y].context = SpaceContext.revealed;
+        setSpaces(newSpaces);
+    }
+
     const [spaces, setSpaces] = useState(() => {
         console.log("doot");
         return genSpaces();
@@ -65,7 +71,7 @@ export default function App(props: AppProps) {
                     width={props.width}
                     height={props.height}
                     spaces={spaces}
-                    onClick={() => {}}
+                    onClick={dig}
                 />
             </div>
         </div>

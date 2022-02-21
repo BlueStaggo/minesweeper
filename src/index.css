@@ -143,7 +143,7 @@ h1 {
 
 @media (max-width: 600px) {
     :root {
-        --bg: #ffffff7f;
+        --bg: #ffffff33;
         --bg-2: #ffffff;
         --bg-3: #c6c5ce;
         --bg-4: #7a7891;
@@ -169,7 +169,14 @@ h1 {
         font-size: 10px;
         line-height: 20px;
         margin: 0px;
-        /* border-radius: 0px; */
         border: 1px solid var(--bg-3);
+    }
+
+    .spaceHidden {
+        border: 1px solid var(--bg-4);
+    }
+
+    .spaceHidden:hover {
+        border: none;
     }
 }
