@@ -20,10 +20,10 @@ export default function App(props: AppProps) {
     }
 
     function allMinesDiscovered(spaces: AbstractSpace[][]) {
-        return flags === 0 && !spaces.find((spaceColumn) =>
+        return !spaces.find((spaceColumn) =>
             spaceColumn.find((space) =>
                 space.content !== SpaceContent.mine
-                && space.context === SpaceContext.hidden
+                && space.context !== SpaceContext.revealed
             )
         );
     }
