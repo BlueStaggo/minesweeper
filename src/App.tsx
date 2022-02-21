@@ -10,6 +10,15 @@ interface AppProps {
 }
 
 export default function App(props: AppProps) {
+    function forSurrounding(x: number, y: number, callback: (x: number, y: number) => void) {
+        for (let xx = Math.max(x - 1, 0); xx <= Math.min(x + 1, props.width - 1); xx++) {
+            for (let yy = Math.max(y - 1, 0); yy <= Math.min(y + 1, props.height - 1); yy++) {
+                if (xx === x && yy === y) continue;
+                callback(xx, yy);
+            }
+        }
+    }
+
     function genSpaces() {
         console.log("Gen spaces...");
         let x: number, y: number;
@@ -34,10 +43,10 @@ export default function App(props: AppProps) {
                 if (spaces[x][y].content === SpaceContent.mine) continue;
 
                 let mines = 0;
-                for (let xx = Math.max(x - 1, 0); xx <= Math.min(x + 1, props.width - 1); xx++)
-                    for (let yy = Math.max(y - 1, 0); yy <= Math.min(y + 1, props.height - 1); yy++)
-                        if (spaces[xx][yy].content === SpaceContent.mine)
-                            mines++;
+                forSurrounding(x, y, (xx, yy) => {
+                    if (spaces[xx][yy].content === SpaceContent.mine)
+                        mines++;
+                });
 
                 spaces[x][y].content = Object.values(SpaceContent)[mines + 1];
             }
@@ -51,10 +60,16 @@ export default function App(props: AppProps) {
         setSpaces(genSpaces());
     }
 
-    function dig(x: number, y: number) {
+    function dig(x: number, y: number, spaces: AbstractSpace[][]) {
         let newSpaces = spaces.slice(0);
         newSpaces[x][y].context = SpaceContext.revealed;
-        setSpaces(newSpaces);
+        if (newSpaces[x][y].content === SpaceContent.empty) {
+            forSurrounding(x, y, (xx, yy) => {
+                if (newSpaces[xx][yy].context === SpaceContext.hidden)
+                    newSpaces = dig(xx, yy, newSpaces);
+            });
+        }
+        return newSpaces;
     }
 
     const [spaces, setSpaces] = useState(() => {
@@ -71,7 +86,9 @@ export default function App(props: AppProps) {
                     width={props.width}
                     height={props.height}
                     spaces={spaces}
-                    onClick={dig}
+                    onClick={(x: number, y: number) => {
+                        setSpaces(dig(x, y, spaces));
+                    }}
                 />
             </div>
         </div>
