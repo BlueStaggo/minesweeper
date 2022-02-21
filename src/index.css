@@ -15,11 +15,13 @@ body {
     background: linear-gradient(150deg, var(--accent-1), var(--accent-2)) fixed;
     font-family: var(--font);
     margin: 0px;
+    color: var(--fg);
 }
 
 h1 {
     font-weight: 900;
     margin-top: 0px;
+    text-shadow: 0px 2px var(--bg-2);
 }
 
 #main {
@@ -40,29 +42,50 @@ h1 {
     padding: 12px;
 }
 
-#face {
-    background-color: var(--bg-2);
-    width: 50px;
-    height: 50px;
-    margin-left: auto;
-    margin-right: auto;
+#header {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    text-shadow: 0px 4px var(--bg-3);
-    border: none;
-    box-shadow: 0px 4px var(--bg-3);
-    font-size: 30px;
-    position: relative;
     margin-bottom: 20px;
+    width: 100%;
+    height: 50px;
 }
 
-#face:hover {
+#header > * {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.headerItem {
+    font-family: var(--font);
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 28px;
+    width: 100%;
+    display: flex;
+    background-color: var(--accent-1);
+    text-shadow: 0px 2px var(--accent-2);
+    box-shadow: 0px 4px var(--accent-2);
+    color: var(--bg);
+}
+
+.headerButton {
+    width: 50px;
+    position: relative;
+    justify-content: center;
+    background-color: var(--bg-2);
+    text-shadow: 0px 2px var(--bg-3);
+    box-shadow: 0px 4px var(--bg-3);
+}
+
+.headerButton:hover {
     border: 4px solid var(--accent-1);
 }
 
-#face:active {
+.headerButton:active {
     border: none;
     box-shadow: inset 0px 4px var(--accent-2);
     text-shadow: 0px 4px var(--accent-2);
@@ -124,7 +147,7 @@ h1 {
     color: #53516d;
 }
 
-.spaceHidden {
+.spaceHidden, .spaceFlagged {
     background-color: var(--bg-3);
 }
 
@@ -143,7 +166,7 @@ h1 {
 
 @media (max-width: 600px) {
     :root {
-        --bg: #ffffff33;
+        --bg-glass: #ffffff33;
         --bg-2: #ffffff;
         --bg-3: #c6c5ce;
         --bg-4: #7a7891;
@@ -161,6 +184,7 @@ h1 {
         height: 100%;
         top: 0px;
         border-radius: 0px;
+        background-color: var(--bg-glass);
     }
 
     .space {
@@ -178,5 +202,17 @@ h1 {
 
     .spaceHidden:hover {
         border: none;
+    }
+
+    .headerItem {
+        background-color: var(--bg-glass);
+        box-shadow: 0px 4px var(--accent-1);
+        font-size: 20px;
+    }
+
+    .headerButton {
+        background-color: var(--bg-2);
+        box-shadow: 0px 4px var(--bg-3);
+        font-size: 30px;
     }
 }

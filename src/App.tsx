@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Face from "./Face";
+import Header from "./Header";
 import MineField from "./MineField";
 import AbstractSpace, { SpaceContent, SpaceContext } from "./AbstractSpace";
 
@@ -58,30 +58,56 @@ export default function App(props: AppProps) {
 
     function reset() {
         setSpaces(genSpaces());
+        setUsingFlag(false);
+        setFlags(props.mineCount);
     }
 
     function dig(x: number, y: number, spaces: AbstractSpace[][]) {
         let newSpaces = spaces.slice(0);
-        newSpaces[x][y].context = SpaceContext.revealed;
-        if (newSpaces[x][y].content === SpaceContent.empty) {
-            forSurrounding(x, y, (xx, yy) => {
-                if (newSpaces[xx][yy].context === SpaceContext.hidden)
-                    newSpaces = dig(xx, yy, newSpaces);
-            });
+        if (!usingFlag) {
+            if (newSpaces[x][y].context !== SpaceContext.hidden) {
+                return newSpaces;
+            }
+            newSpaces[x][y].context = SpaceContext.revealed;
+            if (newSpaces[x][y].content === SpaceContent.empty) {
+                forSurrounding(x, y, (xx, yy) => {
+                    if (newSpaces[xx][yy].context === SpaceContext.hidden)
+                        newSpaces = dig(xx, yy, newSpaces);
+                });
+            }
+            return newSpaces;
+        } else {
+            if (newSpaces[x][y].context === SpaceContext.flagged) {
+                newSpaces[x][y].context = SpaceContext.hidden;
+                setFlags(flags + 1);
+            } else if (newSpaces[x][y].context === SpaceContext.hidden) {
+                newSpaces[x][y].context = SpaceContext.flagged;
+                setFlags(flags - 1)
+            }
+            return newSpaces;
         }
-        return newSpaces;
     }
 
     const [spaces, setSpaces] = useState(() => {
         console.log("doot");
         return genSpaces();
     });
+    const [usingFlag, setUsingFlag] = useState(false);
+    const [flags, setFlags] = useState(props.mineCount);
 
     return (
         <div id="main">
             <div id="game">
                 <h1>MINESWEEPER</h1>
-                <Face face="😎" onClick={reset}/>
+                <Header
+                    face="🙂"
+                    flags={flags}
+                    usingFlag={usingFlag}
+                    onFaceClick={reset}
+                    onFlagClick={() => {
+                        setUsingFlag(!usingFlag);
+                    }}
+                />
                 <MineField
                     width={props.width}
                     height={props.height}
