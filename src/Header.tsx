@@ -6,6 +6,7 @@ type HeaderProps = {
     usingFlag: boolean;
     onFaceClick: () => void;
     onFlagClick: () => void;
+    onSettingsClick: () => void;
 }
 
 export default function Header(props: HeaderProps) {
@@ -23,7 +24,7 @@ export default function Header(props: HeaderProps) {
                 {props.face}
             </button>
             <button
-                className="headerItem headerButton"
+                className={`headerItem headerButton${props.usingFlag ? " usingFlag" : ""}`}
                 onClick={props.onFlagClick}
             >
                 🚩
@@ -34,6 +35,12 @@ export default function Header(props: HeaderProps) {
             >
                 {props.usingFlag ? "Placing flags" : "Digging squares"}
             </div>
+            <button
+                className="headerItem headerButton"
+                onClick={props.onSettingsClick}
+            >
+                ⚙️
+            </button>
         </div>
     )
 }
